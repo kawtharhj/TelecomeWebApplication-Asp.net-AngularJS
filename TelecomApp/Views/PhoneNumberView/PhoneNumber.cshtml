@@ -1,0 +1,110 @@
+﻿@model IEnumerable<VanriseInternship_KawtharHijazi.Models.PhoneNumber>
+
+@{
+    ViewBag.Title = "PhoneNumber";
+}
+
+<h2>Phone Number</h2>
+
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>PhoneNumber Management</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+    <script src="~/Scripts/MyScripts/PhoneNumber.js"></script>
+    <script src="~/Scripts/MyScripts/deviceSelector.js"></script>
+    <script src="~/Scripts/MyScripts/numberFilter.js"></script>
+</head>
+
+<body ng-controller="PhoneNumberController">
+    <div class="container">
+
+
+        <div class="form-group">
+            <device-selector selected-device-id="selectedDeviceId" devices="devices" filter-data="filterData(selectedDeviceId)"></device-selector>
+        </div>
+        <div class="form-group">
+            <number-Filter selected-number-id="selectedNumberId" phones="Phones" filter-number="filterNumber(selectedNumberId)"></number-Filter>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary" ng-click="openAddModal()">Add</button>
+        </div>
+
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>PhoneNumber</th>
+                <th> Device Name </th>
+                <th>Device ID</th>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="phone in filteredPhones">
+                <td>{{ phone.Id }}</td>
+                <td>{{ phone.Number }}</td>
+                <td>{{phone.DeviceName}}</td>
+                <td>{{phone.DeviceId}}</td>
+                <td>
+                    <button class="btn btn-info btn-sm" ng-click="openEditModal(phone)">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <script type="text/ng-template" id="addEditModal.html" ng-model="modalVisible">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ isEditMode ? 'Edit Phone' : 'Add Phone' }}</h4>
+            </div>
+            <div class="modal-body">
+                <form name="PhoneForm">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label">Number:</label>
+                        <div class="col-sm-10" ng-class="{'has-error': PhoneForm.phoneNumber.$invalid && PhoneForm.phoneNumber.$touched}">
+                            <input type="text" class="form-control" id="name" name="phoneNumber" ng-model="newPhone.Number" required ng-pattern="/^\(?(\d{3})\)?[-. ]?(\d{3})[-. ]?(\d{4})$/">
+
+                            <div class="help-block" ng-if=" PhoneForm.phoneNumber.$invalid &&  PhoneForm.phoneNumber.$touched">
+                                <div ng-if=" PhoneForm.phoneNumber.$error.required">Phone Number is required.</div>
+                                <div ng-if=" PhoneForm.phoneNumber.$error.pattern">Invalid phone number format. Please use (XXX) XXX-XXXX.</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="type" class="col-sm-2 col-form-label">Type:</label>
+                            <div class="col-sm-10" ng-class="{'has-error': PhoneForm.deviceName.$invalid && PhoneForm.deviceName.$touched}">
+                                <select class="form-control" id="type" name="deviceName" ng-model="selectedDevice" required
+                                        ng-options="device.ID as device.Name for device in devices" ng-change="getDeviceID(selectedDevice)">
+                                    <option value="">Select Device Type</option>
+                                </select>
+                            </div>
+                            <div class="help-block" ng-if=" PhoneForm.deviceName.$invalid &&  PhoneForm.deviceName.$touched" style="color:red">
+                                Device is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-danger" ng-show="errorMessage">{{ errorMessage }}</div>
+                    <div class="alert alert-success" ng-show="successMessage">{{ successMessage }}</div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="closeModal()">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="savePhone()" ng-disabled="phoneNumber.$invalid">Save</button>
+            </div>
+        </div>
+
+    </script>
+</body>
+
+
+</html>
+
+
+

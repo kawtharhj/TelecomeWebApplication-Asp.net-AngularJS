@@ -1,0 +1,55 @@
+﻿@model IEnumerable<VanriseInternship_KawtharHijazi.Models.Client>
+
+@{
+    ViewBag.Title = "ClientReportView";
+}
+
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Client Management</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="~/Scripts/MyScripts/ClientReport.js"></script>
+
+
+</head>
+
+
+
+<body ng-controller="ClientController">
+
+    @*<div class="form-group">
+            <client-type-selector selected-client-type="selectedClientType" clients="clients" filteredclients="filteredclients" ></client-type-selector>
+        </div>*@
+
+    <div class="form-group">
+        <label>Client Type</label>
+
+        <select ng-model="selectedClientType" ng-change="filterClients()">
+            <option value=""> Select Client Type</option>
+            <option value="0">Individual </option>
+            <option value="1">Organization </option>
+        </select>
+    </div>
+
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th> Client Type </th>
+                <th> Count </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="clientCount in AllClientTypes">
+                <td>{{ clientCount.Type |type }}</td>
+                <td>{{clientCount.Count}}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+

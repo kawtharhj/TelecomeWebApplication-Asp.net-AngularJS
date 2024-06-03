@@ -1,0 +1,160 @@
+﻿@model IEnumerable<VanriseInternship_KawtharHijazi.Models.Client>
+
+@{
+    ViewBag.Title = "ClientView";
+}
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Client Management</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+    <script src="~/Scripts/MyScripts/Client.js"></script>
+    <script src="~/Scripts/MyScripts/typeSelector.js"></script>
+    <script src="~/Scripts/MyScripts/clientSelector.js"></script>
+</head>
+
+<body ng-controller="ClientController">
+    <div class="container">
+
+        <div class="form-group">
+            <type-selector selected-Client-Type="selectedClientType" filter-Client="filterClient(selectedClientType)" clients="clients"></type-selector>
+        </div>
+        <div class="form-group">
+            <client-Selector selected-client="selectedClient" clients="Clients" filter-reservations="filterReservations(selectedClient)"></client-Selector>
+        </div>
+        <div class="form-group">
+            <input type="text" ng-model="searchText" class="form-control" placeholder="Search ...">
+            <button class="btn btn-primary" ng-click="searchClients()">Search</button>
+            <button class="btn btn-primary" ng-click="openAddModal()">Add</button>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th> Type </th>
+                <th>Birthdate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="client in filteredClients">
+                <td>{{ client.ID }}</td>
+                <td>{{ client.Name }}</td>
+                <td>{{ client.ClientType | clientType}}</td>
+                <td>{{ client.BirthDate }}</td>
+                <td>
+                    <button class="btn btn-info btn-sm" ng-click="openEditModal(client)">Edit</button>
+                    <button class="btn btn-info btn-sm" ng-click="openReserveModal(client)">Reserve</button>
+                    <button type="button" class="btn btn-primary" ng-click="OpenUnReserve(client)" ng-if="client.reservedPhones.length>0">Unreserve</button>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script type="text/ng-template" id="addEditModal.html" ng-model="modalVisible">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ isEditMode ? 'Edit Client' : 'Add Client' }}</h4>
+            </div>
+            <div class="modal-body">
+                <form name="clientForm">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label">Name:</label>
+                        <div class="col-sm-10" ng-class="{'has-error': clientForm.Name.$invalid && clientForm.Name.$touched}">
+                            <input type="text" class="form-control" id="name" name="Name" ng-model="newClient.Name" required>
+                            <div class="help-block" ng-if="clientForm.Name.$invalid && clientForm.Name.$touched" style="color:red">
+                                Client Name is required.
+                            </div>
+                        </div>
+
+                        <div class="form-group row" ng-if="!isEditMode">
+                            <label for="type" class="col-sm-2 col-form-label">Type:</label>
+                            <div class="col-sm-10" ng-class="{'has-error': clientForm.Type.$invalid && clientForm.Type.$touched}">
+                                <select class="form-control" id="type" ng-model="newClient.ClientType" required name="Type">
+                                    <option value="0"> Individual</option>
+                                    <option value="1"> Organization </option>
+                                </select>
+                            </div>
+                            <div class="help-block" ng-if="clientForm.Type.$invalid && clientForm.Type.$touched" style="color:red">
+                                Please Select a Type.
+                            </div>
+                        </div>
+
+                        <label for="name" class="col-sm-2 col-form-label"> BirthDate:</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" id="BirthDate" ng-model="newClient.BirthDate" ng-disabled="newClient.ClientType == 1" ng-change="validateBirthDate()">
+                            <div ng-show="invalidBirthdate">Please enter a birthdate above 18 years ago.</div>
+                        </div>
+                    </div>
+                </form>
+                <div class="alert alert-danger" ng-show="errorMessage">{{ errorMessage }}</div>
+                <div class="alert alert-success" ng-show="successMessage">{{ successMessage }}</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="closeModal()">Close</button>
+                <button type="button" class="btn btn-primary"  ng-disabled="invalidBirthdate" ng-click="saveClient()">Save</button>
+            </div>
+        </div>
+
+    </script>
+
+
+
+    <script type="text/ng-template" id="ReserveUnreserve.html">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ UnReserveMode ? 'Unreserve Number' : 'Reserve Number' }}</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label">Name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="name" ng-model="client.Name">
+                        </div>
+
+                        <div ng-if="UnReserveMode">
+                            <label for="name" class="col-sm-2 col-form-label">Phone:</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" ng-model="selectedPhoneNumber" ng-options="phone.Id as phone.Number for phone in reservedPhones" ng-change="getDeviceId(selectedPhoneNumber)">
+                                    <option value="">Select Phone Number </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row" ng-if="!UnReserveMode">
+                            <label for="type" class="col-sm-2 col-form-label">Phone:</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="type" ng-model="selectedPhoneNumber" ng-options="phone.Id as phone.Number for phone in phones" ng-change="getDeviceId(selectedPhoneNumber)">
+                                    <option value="">Select Phone Number</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-danger" ng-show="errorMessage">{{ errorMessage }}</div>
+                    <div class="alert alert-success" ng-show="successMessage">{{ successMessage }}</div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="closeModal()">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="saveReservation()">Save</button>
+            </div>
+        </div>
+
+    </script>
+
+
+
+
+</body>
+
+
+</html>
+

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<VanriseInternship_KawtharHijazi.Models.PhoneReservation>
+
+@{
+    ViewBag.Title = "PhoneReservationView";
+}
+
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Phone Reservations</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="~/Scripts/MyScripts/PhoneReservation.js"></script>
+    <script src="~/Scripts/MyScripts/clientSelector.js"></script>
+    <script src="~/Scripts/MyScripts/numberFilter.js"></script>
+
+</head>
+<body ng-controller="phoneReservationCtrl">
+    <h2>Phone Reservations</h2>
+
+    <div class="form-group">
+        <client-Selector selected-client="selectedClient" clients="clients" filter-reservations="filterReservations(selectedClient)"></client-Selector>
+    </div>
+
+    <div class="form-group">
+        <number-Filter selected-number-id="selectedNumberId" phones="phones" filter-number="filterNumber(selectedNumberId)"></number-Filter>
+    </div>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>BED</th>
+                <th>EED</th>
+                <th>Client Name</th>
+                <th>Phone Number </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="reservation  in filteredReservations " phone-Reservation-Item="reservation">
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+
+</html>

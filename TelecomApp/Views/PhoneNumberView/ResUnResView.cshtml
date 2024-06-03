@@ -1,0 +1,58 @@
+﻿@model IEnumerable<VanriseInternship_KawtharHijazi.Models.Device>
+
+@{
+    ViewBag.Title = "ResUnResView";
+}
+
+
+<h2>Reserve UnReserve View</h2>
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Client Management</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="~/Scripts/MyScripts/ResUnRes.js"></script>
+    <script src="~/Scripts/MyScripts/deviceSelector.js"></script>
+    <script src="~/Scripts/MyScripts/statusFilter.js"></script>
+
+</head>
+
+<body ng-controller="DeviceReportsController">
+
+
+    <div class="form-group">
+        <device-selector selected-device-id="selectedDeviceId" devices="devices" filter-data="filterData(selectedDeviceId)"></device-selector>
+    </div>
+
+    <div class="form-group">
+        <status-filter status-selected="statusSelected" filter-status="filterStatus(statusSelected)"></status-filter>
+    </div>
+
+
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Device Name </th>
+                <th> Phone Number Status </th>
+                <th>Number of Phone Numbers </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="DeviceReport in filteredDevices" ng-if="Reserved">
+                <td>{{DeviceReport.DeviceName}}</td>
+                <td>Reserved</td>
+                <td>{{DeviceReport.ReservedCount}}</td>
+            </tr>
+            <tr ng-repeat="DeviceReport in filteredDevices" ng-if="UnReserved">
+                <td>{{DeviceReport.DeviceName}}</td>
+                <td>Unreserved</td>
+                <td>{{DeviceReport.UnReservedCount}}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

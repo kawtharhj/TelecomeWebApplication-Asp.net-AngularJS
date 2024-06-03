@@ -1,0 +1,67 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\kawth\\Documents\\GitHub\\TelecomeWebApplication-Asp.net-AngularJS\\TelecomApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B072D3DD-7E61-4E1E-AF53-91D666B6D48E}|VanriseInternship_KawtharHijazi.csproj|c:\\users\\kawth\\documents\\github\\telecomewebapplication-asp.net-angularjs\\telecomapp\\views\\phonenumberview\\phonenumber.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B072D3DD-7E61-4E1E-AF53-91D666B6D48E}|VanriseInternship_KawtharHijazi.csproj|solutionrelative:views\\phonenumberview\\phonenumber.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B072D3DD-7E61-4E1E-AF53-91D666B6D48E}|VanriseInternship_KawtharHijazi.csproj|C:\\Users\\kawth\\Documents\\GitHub\\TelecomeWebApplication-Asp.net-AngularJS\\TelecomApp\\views\\home\\clientview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B072D3DD-7E61-4E1E-AF53-91D666B6D48E}|VanriseInternship_KawtharHijazi.csproj|solutionrelative:views\\home\\clientview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 444,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ClientView.cshtml",
+              "DocumentMoniker": "C:\\Users\\kawth\\Documents\\GitHub\\TelecomeWebApplication-Asp.net-AngularJS\\TelecomApp\\Views\\Home\\ClientView.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\ClientView.cshtml",
+              "ToolTip": "C:\\Users\\kawth\\Documents\\GitHub\\TelecomeWebApplication-Asp.net-AngularJS\\TelecomApp\\Views\\Home\\ClientView.cshtml",
+              "RelativeToolTip": "Views\\Home\\ClientView.cshtml",
+              "ViewState": "AQIAAFEAAAAAAAAAAAAgwGQAAAB1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-02T09:31:53.477Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PhoneNumber.cshtml",
+              "DocumentMoniker": "C:\\Users\\kawth\\Documents\\GitHub\\TelecomeWebApplication-Asp.net-AngularJS\\TelecomApp\\Views\\PhoneNumberView\\PhoneNumber.cshtml",
+              "RelativeDocumentMoniker": "Views\\PhoneNumberView\\PhoneNumber.cshtml",
+              "ToolTip": "C:\\Users\\kawth\\Documents\\GitHub\\TelecomeWebApplication-Asp.net-AngularJS\\TelecomApp\\Views\\PhoneNumberView\\PhoneNumber.cshtml",
+              "RelativeToolTip": "Views\\PhoneNumberView\\PhoneNumber.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-02T10:03:37.735Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedHeight": 189,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
